@@ -1,44 +1,15 @@
-// We solve the incompressible, variable-density, Navier–Stokes equations \
-with interfaces and surface tension. We can solve either the axisymmetric\
- or planar version. We can used standard or “reduced” gravity. We also \
- test levelset interface tracking and a momentum formulation.
 
-#define CASE2 1
-//#define AXIS 1
-//#define MOMENTUM 1
-#define CLSVOF 1
-// solved - [ERROR] sb value is not changing with time ???
-// clsvof has to be run with levelset on
-#define LEVELSET 1
-//#define REDUCED 1
+
+
+#define AXIS 1
 
 
 #if AXIS
 # include "axi.h" // fixme: does not run with -catch
 #endif
 
-#if MOMENTUM
-# include "momentum.h"
-#else
 #include "navier-stokes/centered.h"
-
-#if CLSVOF
-# include "two-phase-clsvof.h"
-#elif LEVELSET
-# include "two-phase-levelset.h"
-#else
 # include "two-phase.h"
-#endif
-#endif
-
-#if LEVELSET
-# include "integral.h"
-#else
-# include "tension.h"
-#endif
-#if REDUCED
-# include "reduced.h"
-#endif
 
 #ifndef LEVEL
 # define LEVEL 8
@@ -58,9 +29,7 @@ u.t[left]  = dirichlet(0);
 #endif
 
 int main() {
-  //The domain will span [0:2]×[0:0.5] and will be resolved with\
-  256×64 grid points.
-  size (2 [1]); //How to specify [0:2]*[0:0.5] and the resolution?
+  size (2 [1]); 
   DT = 1. [0,1];
   //[T, L, M] - dimension analysis in the square braket
   init_grid (1 << LEVEL);
