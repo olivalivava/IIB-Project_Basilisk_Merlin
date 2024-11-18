@@ -1,0 +1,1 @@
+./qcc -Wall -O2 $1.c -o $1 -lm gl/libfb_tiny.a gl/libglutils.a
